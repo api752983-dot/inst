@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-rapidapi-key": process.env.INSTAGRAM_API_KEY || "",
+        "x-rapidapi-key": "f74236b7e6msh8ca93f03154347cp11c3bfjsn68a073735bf1",
         "x-rapidapi-host": "instagram120.p.rapidapi.com",
       },
       body: JSON.stringify({
@@ -121,11 +121,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const profile = await response.json()
+    const data = await response.json()
 
-    console.log("[v0] Instagram API raw response:", JSON.stringify(profile, null, 2))
+    console.log("[v0] Instagram API raw response:", JSON.stringify(data, null, 2))
 
-    if (!profile || Object.keys(profile).length === 0) {
+    if (!data || !data.result) {
       return NextResponse.json(
         {
           success: false,
@@ -135,23 +135,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const profile = data.result
+
+    // Extrair contagens de followers, following e posts
+    const followersCount = profile.edge_followed_by?.count || 0
+    const followingCount = profile.edge_follow?.count || 0
+    const postsCount = profile.edge_owner_to_timeline_media?.count || 0
+
     return NextResponse.json({
       success: true,
       profile: {
         username: profile.username || username,
-        full_name: profile.full_name || profile.name || "",
-        biography: profile.biography || profile.bio || "",
-        profile_pic_url: profile.profile_pic_url || profile.profile_picture || "",
-        followers_count: Math.max(0, Number.parseInt(profile.followers_count || profile.followers || "0")),
-        following_count: Math.max(0, Number.parseInt(profile.following_count || profile.following || "0")),
-        posts_count: Math.max(0, Number.parseInt(profile.posts_count || profile.media_count || "0")),
-        media_count: Math.max(0, Number.parseInt(profile.posts_count || profile.media_count || "0")),
-        is_verified: profile.is_verified || profile.verified || false,
-        is_private: profile.is_private || profile.private || false,
-        website: profile.website || "",
-        email: profile.email || "",
-        phone_number: profile.phone_number || "",
-        follower_count: Math.max(0, Number.parseInt(profile.followers_count || profile.followers || "0")),
+        full_name: profile.full_name || "",
+        biography: profile.biography || "",
+        profile_pic_url: profile.profile_pic_url || profile.profile_pic_url_hd || "",
+        followers_count: followersCount,
+        following_count: followingCount,
+        posts_count: postsCount,
+        media_count: postsCount,
+        is_verified: profile.is_verified || false,
+        is_private: profile.is_private || false,
+        website: profile.external_url || "",
+        email: "",
+        phone_number: "",
+        follower_count: followersCount,
         raw_data: profile,
       },
     })

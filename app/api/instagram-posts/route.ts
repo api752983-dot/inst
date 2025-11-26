@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
-        "x-rapidapi-key": process.env.INSTAGRAM_API_KEY || "",
+        "x-rapidapi-key": "f74236b7e6msh8ca93f03154347cp11c3bfjsn68a073735bf1",
         "x-rapidapi-host": "instagram120.p.rapidapi.com",
         "Content-Type": "application/json",
       },
@@ -41,19 +41,26 @@ export async function POST(request: NextRequest) {
 
     console.log("[v0] Instagram posts API raw response:", JSON.stringify(data, null, 2))
 
-    // Ensure we have an array of posts
-    const posts = Array.isArray(data) ? data : data.posts || data.data || []
+    if (data.success === false || data.response_type === "private page") {
+      return NextResponse.json({
+        success: false,
+        error: data.message || "This page is private",
+        posts: [],
+      })
+    }
+
+    const items = data.data?.items || []
 
     return NextResponse.json({
       success: true,
-      posts: posts.map((post: any) => ({
+      posts: items.map((post: any) => ({
         id: post.id || post.pk || "",
-        caption: post.caption || post.text || "",
-        timestamp: post.timestamp || post.taken_at || null,
-        media_type: post.media_type || post.type || "image",
-        media_url: post.media_url || post.image_url || post.images?.[0] || "",
-        like_count: Math.max(0, Number.parseInt(post.like_count || post.likes || "0")),
-        comment_count: Math.max(0, Number.parseInt(post.comment_count || post.comments || "0")),
+        caption: post.caption?.text || "",
+        timestamp: post.taken_at || null,
+        media_type: post.media_type || 1,
+        media_url: post.image_versions?.items?.[0]?.url || post.thumbnail_url || "",
+        like_count: post.like_count || 0,
+        comment_count: post.comment_count || 0,
         raw_data: post,
       })),
       raw_response: data,
