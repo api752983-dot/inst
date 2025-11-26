@@ -26,7 +26,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react"
-import { fetchInstagramProfile } from "@/lib/instagram-tracker"
+import { fetchInstagramProfile, fetchInstagramPosts } from "@/lib/instagram-tracker"
 
 const sanitizeUsername = (username: string): string => {
   let u = (username || "").trim()
@@ -122,6 +122,9 @@ export default function SpySystem() {
   const [isLoadingInstagram, setIsLoadingInstagram] = useState(false)
   const [instagramImageError, setInstagramImageError] = useState(false)
   const [instagramImageLoading, setInstagramImageLoading] = useState(false)
+
+  const [instagramPosts, setInstagramPosts] = useState<any[]>([])
+  const [isLoadingPosts, setIsLoadingPosts] = useState(false)
 
   const debounceTimer = useRef<NodeJS.Timeout | null>(null)
 
@@ -275,6 +278,22 @@ export default function SpySystem() {
     }
   }, []) // Run once on component mount
 
+  useEffect(() => {
+    if (instagramProfile && instagramProfile.username) {
+      setIsLoadingPosts(true)
+      fetchInstagramPosts(instagramProfile.username).then((result) => {
+        if (result.success) {
+          setInstagramPosts(result.posts || [])
+          console.log("[v0] Instagram posts fetched:", result.posts)
+        } else {
+          setInstagramPosts([])
+          console.error("[v0] Failed to fetch posts:", result.error)
+        }
+        setIsLoadingPosts(false)
+      })
+    }
+  }, [instagramProfile])
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
     const remainingSeconds = seconds % 60
@@ -301,6 +320,7 @@ export default function SpySystem() {
         setInstagramProfile(null) // Reset Instagram profile state
         setInstagramImageLoading(false) // Reset image loading state
         setInstagramImageError(false) // Reset image error state
+        setInstagramPosts([]) // Clear posts when resetting
       }
       // Reset timer when entering stage 6
       if (currentStage + 1 === 6) {
@@ -1016,7 +1036,10 @@ export default function SpySystem() {
                   <div className="flex-1 text-left">
                     <p className="text-base text-white font-semibold">@{instagramProfile.username}</p>
                     <p className="text-sm text-gray-300 mt-1">
-                      {instagramProfile.media_count} posts • {instagramProfile.follower_count.toLocaleString()}{" "}
+                      {instagramProfile.media_count} posts •{" "}
+                      {typeof instagramProfile.follower_count === "number"
+                        ? instagramProfile.follower_count.toLocaleString()
+                        : instagramProfile.follower_count || "0"}{" "}
                       followers
                     </p>
                     {instagramProfile.biography && (
