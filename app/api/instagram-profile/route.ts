@@ -92,45 +92,36 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "Username is required" }, { status: 400 })
     }
 
-    const apiUrl = "https://simple-instagram-api.p.rapidapi.com/account-info"
+    const apiUrl = "https://instagram120.p.rapidapi.com/api/instagram/profile"
+
+    console.log("[v0] Fetching profile from instagram120 API for:", username)
 
     const response = await fetch(apiUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
+        "content-type": "application/json",
         "x-rapidapi-key": process.env.INSTAGRAM_API_KEY || "",
-        "x-rapidapi-host": "simple-instagram-api.p.rapidapi.com",
+        "x-rapidapi-host": "instagram120.p.rapidapi.com",
       },
+      body: JSON.stringify({
+        username: username,
+      }),
       cache: "no-store",
     })
 
-    const params = new URL(apiUrl)
-    params.searchParams.set("username", username)
-
-    console.log("[v0] Instagram API URL:", apiUrl)
-    console.log("[v0] Username parameter:", username)
-
-    // Fetch with query params using URL constructor
-    const finalResponse = await fetch(`${apiUrl}?username=${encodeURIComponent(username)}`, {
-      method: "GET",
-      headers: {
-        "x-rapidapi-key": process.env.INSTAGRAM_API_KEY || "",
-        "x-rapidapi-host": "simple-instagram-api.p.rapidapi.com",
-      },
-      cache: "no-store",
-    })
-
-    if (!finalResponse.ok) {
-      console.error("[v0] Instagram API error:", finalResponse.status, finalResponse.statusText)
+    if (!response.ok) {
+      const errorData = await response.text()
+      console.error("[v0] Instagram API error:", response.status, errorData)
       return NextResponse.json(
         {
           success: false,
-          error: `Instagram API error: ${finalResponse.statusText}`,
+          error: `Instagram API error: ${response.statusText}`,
         },
-        { status: finalResponse.status },
+        { status: response.status },
       )
     }
 
-    const profile = await finalResponse.json()
+    const profile = await response.json()
 
     console.log("[v0] Instagram API raw response:", JSON.stringify(profile, null, 2))
 
@@ -147,35 +138,20 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       profile: {
-        username: profile.username || profile.user?.username || username,
-        full_name: profile.full_name || profile.name || profile.user?.full_name || "Unknown",
-        biography: profile.biography || profile.bio || profile.user?.biography || "",
-        profile_pic_url: profile.profile_pic_url || profile.profile_picture || profile.user?.profile_pic_url || "",
-        followers_count: Math.max(
-          0,
-          Number.parseInt(profile.followers_count || profile.followers || profile.user?.followers || "0"),
-        ),
-        following_count: Math.max(
-          0,
-          Number.parseInt(profile.following_count || profile.following || profile.user?.following || "0"),
-        ),
-        posts_count: Math.max(
-          0,
-          Number.parseInt(profile.posts_count || profile.posts || profile.media_count || profile.user?.posts || "0"),
-        ),
-        media_count: Math.max(
-          0,
-          Number.parseInt(profile.posts_count || profile.posts || profile.media_count || profile.user?.posts || "0"),
-        ),
-        is_verified: profile.is_verified || profile.verified || profile.user?.is_verified || false,
-        is_private: profile.is_private || profile.private || profile.user?.is_private || false,
-        website: profile.website || profile.user?.website || "",
-        email: profile.email || profile.user?.email || "",
-        phone_number: profile.phone_number || profile.user?.phone_number || "",
-        follower_count: Math.max(
-          0,
-          Number.parseInt(profile.followers_count || profile.followers || profile.user?.followers || "0"),
-        ),
+        username: profile.username || username,
+        full_name: profile.full_name || profile.name || "",
+        biography: profile.biography || profile.bio || "",
+        profile_pic_url: profile.profile_pic_url || profile.profile_picture || "",
+        followers_count: Math.max(0, Number.parseInt(profile.followers_count || profile.followers || "0")),
+        following_count: Math.max(0, Number.parseInt(profile.following_count || profile.following || "0")),
+        posts_count: Math.max(0, Number.parseInt(profile.posts_count || profile.media_count || "0")),
+        media_count: Math.max(0, Number.parseInt(profile.posts_count || profile.media_count || "0")),
+        is_verified: profile.is_verified || profile.verified || false,
+        is_private: profile.is_private || profile.private || false,
+        website: profile.website || "",
+        email: profile.email || "",
+        phone_number: profile.phone_number || "",
+        follower_count: Math.max(0, Number.parseInt(profile.followers_count || profile.followers || "0")),
         raw_data: profile,
       },
     })
