@@ -1015,21 +1015,30 @@ export default function SpySystem() {
                     ) : instagramProfile.profile_pic_url && !instagramImageError ? (
                       <>
                         <img
-                          src={`/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`}
+                          src={
+                            instagramImageError
+                              ? instagramProfile.profile_pic_url
+                              : `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                          }
                           alt={instagramProfile.username}
                           className="w-full h-full object-cover"
                           loading="eager"
                           crossOrigin="anonymous"
                           onLoad={() => {
-                            console.log("[v0] Instagram image loaded successfully")
+                            console.log("[v0] Profile picture loaded successfully")
                             setInstagramImageLoading(false)
                             setInstagramImageError(false)
-                            setAvatarLocalCache(instagramProfile.username, instagramProfile.profile_pic_url)
                           }}
                           onError={(e) => {
-                            console.log("[v0] Image failed to load")
-                            setInstagramImageError(true)
-                            setInstagramImageLoading(false)
+                            console.log("[v0] Trying fallback image source")
+                            if (!instagramImageError) {
+                              // Tenta carregar direto da URL
+                              setInstagramImageError(true)
+                              const img = e.target as HTMLImageElement
+                              img.src = instagramProfile.profile_pic_url
+                            } else {
+                              setInstagramImageLoading(false)
+                            }
                           }}
                         />
                       </>

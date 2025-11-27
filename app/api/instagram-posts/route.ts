@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
-        "x-rapidapi-key": "f74236b7e6msh8ca93f03154347cp11c3bfjsn68a073735bf1",
+        "x-rapidapi-key": "58476d898amsh61d6476db2514cfp114ab2jsn8e290bed9186",
         "x-rapidapi-host": "instagram120.p.rapidapi.com",
         "Content-Type": "application/json",
       },
