@@ -1012,12 +1012,10 @@ export default function SpySystem() {
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
                     ) : instagramProfile.profile_pic_url && !instagramImageError ? (
                       <>
-                        {console.log("[v0] Rendering Instagram image with URL:", instagramProfile.profile_pic_url)}
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500"></div>
                         <img
-                          src={`https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`}
+                          src={instagramProfile.profile_pic_url || "/placeholder.svg"}
                           alt={instagramProfile.username}
-                          className="w-full h-full object-cover relative z-10"
+                          className="w-full h-full object-cover"
                           loading="eager"
                           crossOrigin="anonymous"
                           onLoad={() => {
@@ -1027,11 +1025,10 @@ export default function SpySystem() {
                           }}
                           onError={(e) => {
                             console.log("[v0] Instagram image failed to load, trying fallback")
-                            console.log("[v0] Image src was:", instagramProfile.profile_pic_url)
+                            // Tenta usar o proxy como fallback
                             const img = e.target as HTMLImageElement
-                            if (img.src.includes("wsrv.nl")) {
-                              console.log("[v0] Trying direct URL without proxy")
-                              img.src = instagramProfile.profile_pic_url
+                            if (!img.src.includes("/api/instagram-image-proxy")) {
+                              img.src = `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                             } else {
                               setInstagramImageError(true)
                               setInstagramImageLoading(false)
@@ -1543,7 +1540,7 @@ export default function SpySystem() {
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">"The most perfect woman I've ever seen ❤️"</p>
+                          <p className="text-white text-sm"> "The most perfect woman I've ever seen ❤️"</p>
                         </div>
                       </div>
                     </div>
@@ -1602,11 +1599,12 @@ export default function SpySystem() {
                 <img
                   src={
                     instagramProfile?.profile_pic_url
-                      ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                      ? instagramProfile.profile_pic_url
                       : imagePreviewUrl || "/user-profile-illustration.png"
                   }
                   alt="User Profile"
                   className="w-10 h-10 rounded-full object-cover border-2 border-red-500"
+                  crossOrigin="anonymous"
                 />
                 <span className="text-white font-bold text-lg truncate max-w-[120px]">
                   {investigatedHandle || "@your_profile"}
@@ -1636,11 +1634,12 @@ export default function SpySystem() {
               <img
                 src={
                   instagramProfile?.profile_pic_url
-                    ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                    ? instagramProfile.profile_pic_url
                     : imagePreviewUrl || "/super-like-sender.jpg"
                 }
                 alt="Super Like Sender"
                 className="w-10 h-10 rounded-full object-cover border-2 border-yellow-300"
+                crossOrigin="anonymous"
               />
               <span>You received a Super Like!</span>
               <Star size={24} className="text-yellow-300 fill-yellow-300" />
@@ -1923,7 +1922,9 @@ export default function SpySystem() {
               <p className="text-2xl md:text-3xl font-bold text-red-500">Offer expired!</p>
             )}
             <Button
-              onClick={() => (window.location.href = "https://pay.hotmart.com/K102876182J?checkoutMode=10")}
+              onClick={() =>
+                (window.location.href = "https://pay.mycheckoutt.com/01997889-d90f-7176-b1ad-330b2aadd114?ref=")
+              }
               disabled={timeLeft === 0}
               className="mt-10 px-10 py-5 text-xl font-bold uppercase bg-gradient-to-r from-red-700 to-black text-white shadow-lg hover:from-red-800 hover:to-gray-900 transition-all duration-300 transform hover:scale-105 animate-pulse-slow disabled:opacity-50 disabled:cursor-not-allowed"
             >
