@@ -1013,12 +1013,12 @@ export default function SpySystem() {
                     ) : instagramProfile.profile_pic_url && !instagramImageError ? (
                       <>
                         {console.log("[v0] Rendering Instagram image with URL:", instagramProfile.profile_pic_url)}
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 animate-pulse"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500"></div>
                         <img
                           src={`https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`}
                           alt={instagramProfile.username}
                           className="w-full h-full object-cover relative z-10"
-                          loading="lazy"
+                          loading="eager"
                           crossOrigin="anonymous"
                           onLoad={() => {
                             console.log("[v0] Instagram image loaded successfully")
@@ -1957,7 +1957,7 @@ export default function SpySystem() {
       {/* Changed font-roboto to font-inter */}
       {/* Background grid pattern */}
       <div
-        className={`absolute inset-0 bg-grid-pattern opacity-10 animate-pulse-grid`}
+        className={`absolute inset-0 opacity-10 animate-pulse-grid`}
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fillOpacity='0.2' fillRule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E")`,
         }}
