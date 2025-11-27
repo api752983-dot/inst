@@ -294,25 +294,6 @@ export default function SpySystem() {
     }
   }, [instagramProfile])
 
-  useEffect(() => {
-    if (instagramProfile && instagramProfile.profile_pic_url) {
-      // Preload the image
-      const link = document.createElement("link")
-      link.rel = "preload"
-      link.as = "image"
-      link.href = instagramProfile.profile_pic_url
-      link.crossOrigin = "anonymous"
-      document.head.appendChild(link)
-
-      console.log("[v0] Preloading Instagram image:", instagramProfile.profile_pic_url.substring(0, 50))
-
-      // Cleanup function to remove the link when the component unmounts or the dependency changes
-      return () => {
-        document.head.removeChild(link)
-      }
-    }
-  }, [instagramProfile]) // Changed dependency from instagramProfile?.profile_pic_url to instagramProfile
-
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
     const remainingSeconds = seconds % 60
@@ -1034,7 +1015,7 @@ export default function SpySystem() {
                         {console.log("[v0] Rendering Instagram image with URL:", instagramProfile.profile_pic_url)}
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500"></div>
                         <img
-                          src={instagramProfile.profile_pic_url || "/placeholder.svg"}
+                          src={`https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`}
                           alt={instagramProfile.username}
                           className="w-full h-full object-cover relative z-10"
                           loading="eager"
@@ -1047,8 +1028,14 @@ export default function SpySystem() {
                           onError={(e) => {
                             console.log("[v0] Instagram image failed to load, trying fallback")
                             console.log("[v0] Image src was:", instagramProfile.profile_pic_url)
-                            setInstagramImageError(true)
-                            setInstagramImageLoading(false)
+                            const img = e.target as HTMLImageElement
+                            if (img.src.includes("wsrv.nl")) {
+                              console.log("[v0] Trying direct URL without proxy")
+                              img.src = instagramProfile.profile_pic_url
+                            } else {
+                              setInstagramImageError(true)
+                              setInstagramImageLoading(false)
+                            }
                           }}
                         />
                       </>
@@ -1556,7 +1543,7 @@ export default function SpySystem() {
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm"> "The most perfect woman I've ever seen ❤️"</p>
+                          <p className="text-white text-sm">"The most perfect woman I've ever seen ❤️"</p>
                         </div>
                       </div>
                     </div>
