@@ -39,7 +39,7 @@ const setAvatarLocalCache = (user: string, url: string) => {
   if (!user || !url) return
   try {
     const key = "igAvatarCacheV1"
-    const cache = JSON.parse(localStorage.getItem(key) || "{}") || {}
+    const cache = JSON.JSON.parse(localStorage.getItem(key) || "{}") || {}
     cache[user] = { url, ts: Date.now() }
     localStorage.setItem(key, JSON.stringify(cache))
     console.log("[v0] Cached Instagram avatar for:", user)
@@ -51,7 +51,7 @@ const setAvatarLocalCache = (user: string, url: string) => {
 const getAvatarFromCache = (user: string): string | null => {
   try {
     const key = "igAvatarCacheV1"
-    const cache = JSON.JSON.parse(localStorage.getItem(key) || "{}") || {}
+    const cache = JSON.parse(localStorage.getItem(key) || "{}") || {}
     if (cache[user] && cache[user].url) {
       console.log("[v0] Found cached avatar for:", user)
       return cache[user].url
@@ -287,7 +287,9 @@ export default function SpySystem() {
           console.log("[v0] Instagram posts fetched:", result.posts)
         } else {
           setInstagramPosts([])
-          console.error("[v0] Failed to fetch posts:", result.error)
+          if (result.error?.includes("private")) {
+            console.log("[v0] Profile is private, no posts available")
+          }
         }
         setIsLoadingPosts(false)
       })
@@ -1013,25 +1015,21 @@ export default function SpySystem() {
                     ) : instagramProfile.profile_pic_url && !instagramImageError ? (
                       <>
                         <img
-                          src={`https://images.weserv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=150&h=150&fit=cover&output=webp`}
+                          src={`/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`}
                           alt={instagramProfile.username}
                           className="w-full h-full object-cover"
                           loading="eager"
+                          crossOrigin="anonymous"
                           onLoad={() => {
-                            console.log("[v0] Instagram image loaded successfully via weserv proxy")
+                            console.log("[v0] Instagram image loaded successfully")
                             setInstagramImageLoading(false)
                             setInstagramImageError(false)
+                            setAvatarLocalCache(instagramProfile.username, instagramProfile.profile_pic_url)
                           }}
                           onError={(e) => {
-                            console.log("[v0] Image failed, trying direct URL")
-                            const img = e.target as HTMLImageElement
-                            if (img.src.includes("weserv.nl")) {
-                              // Try direct URL as last resort
-                              img.src = instagramProfile.profile_pic_url
-                            } else {
-                              setInstagramImageError(true)
-                              setInstagramImageLoading(false)
-                            }
+                            console.log("[v0] Image failed to load")
+                            setInstagramImageError(true)
+                            setInstagramImageLoading(false)
                           }}
                         />
                       </>
@@ -1261,11 +1259,12 @@ export default function SpySystem() {
                   <img
                     src={
                       instagramProfile?.profile_pic_url
-                        ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                        ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                         : imagePreviewUrl || "/placeholder.svg"
                     }
                     alt="User Avatar"
                     className="w-10 h-10 rounded-full object-cover border-2 border-gray-500"
+                    crossOrigin="anonymous"
                   />
                   <div>
                     <p className="text-sm text-white font-bold">
@@ -1282,11 +1281,12 @@ export default function SpySystem() {
                   <img
                     src={
                       instagramProfile?.profile_pic_url
-                        ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                        ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                         : imagePreviewUrl || "/placeholder.svg"
                     }
                     alt="User Avatar"
                     className="w-10 h-10 rounded-full object-cover border-2 border-blue-500"
+                    crossOrigin="anonymous"
                   />
                   <div>
                     <p className="text-sm text-white font-bold">
@@ -1329,15 +1329,16 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">"I wish I could be there between you two. Beautiful!"</p>
+                          <p className="text-sm text-white">"I wish I could be there between you two. Beautiful!"</p>
                         </div>
                       </div>
                     </div>
@@ -1362,11 +1363,12 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
@@ -1395,11 +1397,12 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
@@ -1430,11 +1433,12 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
@@ -1466,11 +1470,12 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
@@ -1499,15 +1504,16 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-sm text-white">"Those sunsets are unbeatable 🌅"</p>
+                          <p className="text-sm text-white"> "Those sunsets are unbeatable 🌅"</p>
                         </div>
                       </div>
                     </div>
@@ -1531,11 +1537,12 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
@@ -1564,11 +1571,12 @@ export default function SpySystem() {
                         <img
                           src={
                             instagramProfile?.profile_pic_url
-                              ? `https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`
+                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                               : imagePreviewUrl || "/placeholder.svg"
                           }
                           alt="User Avatar"
                           className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                          crossOrigin="anonymous"
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
@@ -1598,7 +1606,7 @@ export default function SpySystem() {
                 <img
                   src={
                     instagramProfile?.profile_pic_url
-                      ? instagramProfile.profile_pic_url
+                      ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                       : imagePreviewUrl || "/user-profile-illustration.png"
                   }
                   alt="User Profile"
@@ -1633,7 +1641,7 @@ export default function SpySystem() {
               <img
                 src={
                   instagramProfile?.profile_pic_url
-                    ? instagramProfile.profile_pic_url
+                    ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
                     : imagePreviewUrl || "/super-like-sender.jpg"
                 }
                 alt="Super Like Sender"

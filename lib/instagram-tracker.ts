@@ -90,7 +90,11 @@ export async function fetchInstagramPosts(username: string): Promise<{
     const data = await response.json()
 
     if (!response.ok || !data.success) {
-      console.error("[v0] Failed to fetch Instagram posts:", data.error)
+      if (data.error?.includes("private")) {
+        console.log("[v0] Profile is private, posts not available")
+      } else {
+        console.error("[v0] Failed to fetch Instagram posts:", data.error)
+      }
       return {
         success: false,
         error: data.error || "Failed to fetch Instagram posts",
