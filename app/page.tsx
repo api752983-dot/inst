@@ -523,7 +523,7 @@ export default function SpySystem() {
       case 0:
         return (
           <div className="text-center space-y-8">
-            <p className="text-4xl md:text-5xl font-bold text-white tracking-wider animate-pulse">SPY 3</p>
+            <p className="text-4xl md:text-5xl font-bold text-white tracking-wider animate-pulse">INSTA CHECK 3</p>
             <h1 className="text-2xl md:text-3xl font-bold text-white tracking-wider animate-pulse">
               💔 FEELING BETRAYED?
             </h1>
@@ -1012,20 +1012,30 @@ export default function SpySystem() {
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
                     ) : instagramProfile.profile_pic_url && !instagramImageError ? (
                       <>
+                        {console.log("[v0] Rendering Instagram image with URL:", instagramProfile.profile_pic_url)}
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 animate-pulse"></div>
                         <img
                           src={`https://wsrv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=100&h=100&fit=cover&output=webp`}
                           alt={instagramProfile.username}
                           className="w-full h-full object-cover relative z-10"
+                          loading="lazy"
+                          crossOrigin="anonymous"
                           onLoad={() => {
                             console.log("[v0] Instagram image loaded successfully")
                             setInstagramImageLoading(false)
                             setInstagramImageError(false)
                           }}
-                          onError={() => {
-                            console.log("[v0] Instagram image failed to load")
-                            setInstagramImageError(true)
-                            setInstagramImageLoading(false)
+                          onError={(e) => {
+                            console.log("[v0] Instagram image failed to load, trying fallback")
+                            console.log("[v0] Image src was:", instagramProfile.profile_pic_url)
+                            const img = e.target as HTMLImageElement
+                            if (img.src.includes("wsrv.nl")) {
+                              console.log("[v0] Trying direct URL without proxy")
+                              img.src = instagramProfile.profile_pic_url
+                            } else {
+                              setInstagramImageError(true)
+                              setInstagramImageLoading(false)
+                            }
                           }}
                         />
                       </>
@@ -1501,7 +1511,7 @@ export default function SpySystem() {
                         />
                         <div>
                           <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">"Those sunsets are unbeatable 🌅"</p>
+                          <p className="text-sm text-white">"Those sunsets are unbeatable 🌅"</p>
                         </div>
                       </div>
                     </div>
