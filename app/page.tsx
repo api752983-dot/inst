@@ -1013,22 +1013,21 @@ export default function SpySystem() {
                     ) : instagramProfile.profile_pic_url && !instagramImageError ? (
                       <>
                         <img
-                          src={instagramProfile.profile_pic_url || "/placeholder.svg"}
+                          src={`https://images.weserv.nl/?url=${encodeURIComponent(instagramProfile.profile_pic_url)}&w=150&h=150&fit=cover&output=webp`}
                           alt={instagramProfile.username}
                           className="w-full h-full object-cover"
                           loading="eager"
-                          crossOrigin="anonymous"
                           onLoad={() => {
-                            console.log("[v0] Instagram image loaded successfully")
+                            console.log("[v0] Instagram image loaded successfully via weserv proxy")
                             setInstagramImageLoading(false)
                             setInstagramImageError(false)
                           }}
                           onError={(e) => {
-                            console.log("[v0] Instagram image failed to load, trying fallback")
-                            // Tenta usar o proxy como fallback
+                            console.log("[v0] Image failed, trying direct URL")
                             const img = e.target as HTMLImageElement
-                            if (!img.src.includes("/api/instagram-image-proxy")) {
-                              img.src = `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            if (img.src.includes("weserv.nl")) {
+                              // Try direct URL as last resort
+                              img.src = instagramProfile.profile_pic_url
                             } else {
                               setInstagramImageError(true)
                               setInstagramImageLoading(false)
