@@ -1361,7 +1361,7 @@ export default function SpySystem() {
                       />
                       <div>
                         <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                        <p className="text-white text-sm">"I wish I could be there between you two. Beautiful!"</p>
+                        <p className="text-sm text-white">"very beautiful, I still want to meet you in person"</p>
                       </div>
                     </div>
                   </div>
@@ -1694,13 +1694,13 @@ export default function SpySystem() {
                       ? currentPhotoIndex === 0
                         ? "/images/tinder-male-rafael.png"
                         : currentPhotoIndex === 1
-                          ? "/images/tinder-male-rafael-2.jpg"
-                          : "/images/tinder-male-1.jpg"
+                          ? "/images/tinder-male-2.jpg"
+                          : "/images/tinder-male-3.jpg"
                       : currentPhotoIndex === 0
                         ? "/images/tinder-main-profile.jpeg"
                         : currentPhotoIndex === 1
-                          ? "/images/imagem-20do-20whatsapp-20de-202025-08-15-20-c3-a0-28s-29-2016.jpeg"
-                          : "/images/tinder-female-1.jpg"
+                          ? "/images/tinder-female-2.jpg"
+                          : "/images/tinder-female-3.jpg"
                   }
                   alt={`Profile Photo ${currentPhotoIndex + 1}`}
                   className="w-full h-full object-cover blur-sm"
