@@ -1795,76 +1795,171 @@ export default function SpySystem() {
 
             {/* Grid of other profiles (blurred, one with Match overlay) */}
             <div className="grid grid-cols-2 gap-2 p-2 bg-gray-950 flex-grow">
-              {/* Card 1: With Match Overlay */}
-              <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
-                <img
-                  src={
-                    matchImageSrc || "/placeholder.svg?height=300&width=200" // Conditional image source
-                  } // Updated placeholder src
-                  alt={investigatedGender === "Feminino" ? "Female Match Profile" : "Male Match Profile"}
-                  className="w-full h-full object-cover filter blur-md"
-                />
-                <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">Nova</span>
-                <div className="absolute bottom-2 left-2 text-white text-sm">
-                  <span className="bg-gray-700/70 px-2 py-1 rounded-full">30</span>
-                  <p className="flex items-center gap-1 mt-1">
-                    <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
-                  </p>
-                </div>
-                {/* Match Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-pink-600 to-red-700 opacity-90 text-white text-xl font-bold uppercase">
-                  <Heart size={24} className="mb-1" /> MATCH!
-                </div>
-              </div>
+              {investigatedGender === "Feminino" ? (
+                <>
+                  {/* Male Profile 1 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-male-1.jpg"
+                      alt="Profile 1"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">29</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Card 2 */}
-              <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
-                <img
-                  src="/placeholder.svg?height=300&width=200"
-                  alt="Profile 2"
-                  className="w-full h-full object-cover filter blur-md"
-                />
-                <div className="absolute bottom-2 left-2 text-white text-sm">
-                  <span className="bg-gray-700/70 px-2 py-1 rounded-full">28</span>
-                  <p className="flex items-center gap-1 mt-1">
-                    <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
-                  </p>
-                </div>
-              </div>
+                  {/* Male Profile 2 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-male-2.jpg"
+                      alt="Profile 2"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">31</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Card 3: Veja quem curtiu você */}
-              <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
-                <img
-                  src="/placeholder.svg?height=300&width=200"
-                  alt="Profile 3"
-                  className="w-full h-full object-cover filter blur-md"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-yellow-500/80 text-black text-base font-bold text-center p-3">
-                  see who already liked you
-                  <CheckCircle size={20} className="ml-1 text-black" />
-                </div>
-                <div className="absolute bottom-2 left-2 text-white text-sm">
-                  <span className="bg-gray-700/70 px-2 py-1 rounded-full">29</span>
-                  <p className="flex items-center gap-1 mt-1">
-                    <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
-                  </p>
-                </div>
-              </div>
+                  {/* Male Profile 3 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-male-3.jpg"
+                      alt="Profile 3"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">27</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Card 4 */}
-              <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
-                <img
-                  src="/placeholder.svg?height=300&width=200"
-                  alt="Profile 4"
-                  className="w-full h-full object-cover filter blur-md"
-                />
-                <div className="absolute bottom-2 left-2 text-white text-sm">
-                  <span className="bg-gray-700/70 px-2 py-1 rounded-full">24</span>
-                  <p className="flex items-center gap-1 mt-1">
-                    <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
-                  </p>
-                </div>
-              </div>
+                  {/* Male Profile 4 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-male-4.jpg"
+                      alt="Profile 4"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">30</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Card 1: Female Image 1 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-female-1.jpg"
+                      alt="Profile 1"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">26</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Female Image 2 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-female-2.jpg"
+                      alt="Profile 2"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">28</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Female Image 3 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-female-3.jpg"
+                      alt="Profile 3"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">25</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card 4: Female Image 4 with Lock */}
+                  <div className="relative w-full h-60 bg-gray-800 rounded-lg overflow-hidden">
+                    <img
+                      src="/images/tinder-female-4.jpg"
+                      alt="Profile 4"
+                      className="w-full h-full object-cover filter blur-sm"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-gray-900/80 p-3 rounded-full">
+                        <Lock size={32} className="text-gray-300" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <span className="bg-gray-700/70 px-2 py-1 rounded-full">24</span>
+                      <p className="flex items-center gap-1 mt-1">
+                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Bottom Navigation */}
