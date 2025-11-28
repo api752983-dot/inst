@@ -1823,6 +1823,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">bruninho</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">29</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1843,6 +1844,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">ricardo</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">31</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1863,6 +1865,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">alex</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">27</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1883,6 +1886,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">marcus</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">30</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1905,6 +1909,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">gabyzinha</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">26</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1925,6 +1930,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">renatinha</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">28</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1945,6 +1951,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">bruna</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">25</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
@@ -1965,6 +1972,7 @@ export default function SpySystem() {
                       </div>
                     </div>
                     <div className="absolute bottom-2 left-2 text-white text-sm">
+                      <p className="font-semibold text-base">bruna</p>
                       <span className="bg-gray-700/70 px-2 py-1 rounded-full">24</span>
                       <p className="flex items-center gap-1 mt-1">
                         <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span> Online recently...
