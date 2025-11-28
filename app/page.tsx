@@ -1222,10 +1222,12 @@ export default function SpySystem() {
                   <span className="text-green-400">[SYSTEM_LOG]</span> New activity detected:
                 </p>
                 <p className="text-base text-white font-mono ml-3">
-                  <span className="text-blue-400">[INSTAGRAM]</span> New message from @alexia_30.
+                  <span className="text-blue-400">[INSTAGRAM]</span> New message from @
+                  {investigatedGender === "Feminino" ? "alex22" : "alexia_30"}.
                 </p>
                 <p className="text-base text-white font-mono ml-3">
-                  <span className="text-blue-400">[INSTAGRAM]</span> @izes liked your photo.
+                  <span className="text-blue-400">[INSTAGRAM]</span> @
+                  {investigatedGender === "Feminino" ? "rodrigo.b" : "izes"} liked your photo.
                 </p>
               </div>
 
@@ -1234,13 +1236,20 @@ export default function SpySystem() {
                 {/* Notification 1: Liked Photo */}
                 <div className="flex items-center gap-3 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-5">
                   <img
-                    src="/images/female-placeholder-1.jpeg"
+                    src={
+                      investigatedGender === "Feminino"
+                        ? "/images/male-placeholder-1.jpg"
+                        : "/images/female-placeholder-1.jpeg"
+                    }
                     alt="User Avatar"
                     className="w-10 h-10 rounded-full object-cover border-2 border-pink-500"
                   />
                   <div className="flex-1">
                     <p className="text-white text-sm">
-                      <span className="font-semibold">@alexia_30</span> liked your photo
+                      <span className="font-semibold">
+                        @{investigatedGender === "Feminino" ? "alex22" : "alexia_30"}
+                      </span>{" "}
+                      liked your photo
                     </p>
                     <p className="text-gray-400 text-xs">2 minutes ago</p>
                   </div>
@@ -1250,13 +1259,18 @@ export default function SpySystem() {
                 {/* Notification 2: New Message */}
                 <div className="flex items-center gap-3 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-6">
                   <img
-                    src="/images/female-placeholder-2.jpeg"
+                    src={
+                      investigatedGender === "Feminino"
+                        ? "/images/male-placeholder-2.jpg"
+                        : "/images/female-placeholder-2.jpeg"
+                    }
                     alt="Message Avatar"
                     className="w-10 h-10 rounded-full object-cover border-2 border-blue-500"
                   />
                   <div className="flex-1">
                     <p className="text-white text-sm">
-                      <span className="font-semibold">@izes</span> sent you a message
+                      <span className="font-semibold">@{investigatedGender === "Feminino" ? "rodrigo.b" : "izes"}</span>{" "}
+                      sent you a message
                     </p>
                     <p className="text-gray-400 text-xs">5 minutes ago</p>
                   </div>
@@ -1307,295 +1321,294 @@ export default function SpySystem() {
                   <MessageCircle size={20} className="text-blue-500 ml-auto" />
                 </div>
               </div>
+            </div>
 
-              {/* Original section for blurred images and comments - adjusted delay */}
-              <div className="mt-6 space-y-5 text-left">
-                <p className="text-xl md:text-2xl text-white font-bold animate-fade-in-delay-9">
-                  <span className="text-red-400">INTERCEPTED:</span> Suspicious Likes from{" "}
-                  {investigatedHandle || "@alvo"}
-                </p>
+            {/* Original section for blurred images and comments - adjusted delay */}
+            <div className="mt-6 space-y-5 text-left">
+              <p className="text-xl md:text-2xl text-white font-bold animate-fade-in-delay-9">
+                <span className="text-red-400">INTERCEPTED:</span> Suspicious Likes from {investigatedHandle || "@alvo"}
+              </p>
 
-                {investigatedGender === "Feminino" ? (
-                  <>
-                    {/* Male Photos for Female Investigation */}
-                    {/* Liked Photo 1 - Man at beach */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-10">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/male-photo-beach.png"
-                          alt="Liked Photo 1"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">2.1K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-sm text-white">"I wish I could be there between you two. Beautiful!"</p>
-                        </div>
+              {investigatedGender === "Feminino" ? (
+                <>
+                  {/* Male Photos for Female Investigation */}
+                  {/* Liked Photo 1 - Man at beach */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-10">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/male-photo-beach.png"
+                        alt="Liked Photo 1"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">2.1K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm">"I wish I could be there between you two. Beautiful!"</p>
+                      </div>
+                    </div>
+                  </div>
 
-                    {/* Liked Photo 2 - Man in gym */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-11">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/male-photo-gym.png"
-                          alt="Liked Photo 2"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">3.2K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">"What a handsome man!"</p>
-                        </div>
+                  {/* Liked Photo 2 - Man in gym */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-11">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/male-photo-gym.png"
+                        alt="Liked Photo 2"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">3.2K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm">"What a handsome man!"</p>
+                      </div>
+                    </div>
+                  </div>
 
-                    {/* Liked Photo 3 - Man bathroom selfie */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-12">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/male-photo-bathroom.png"
-                          alt="Liked Photo 3"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">4.5K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">
-                            "My friend, you're getting more handsome every day, I miss you."
-                          </p>
-                        </div>
+                  {/* Liked Photo 3 - Man bathroom selfie */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-12">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/male-photo-bathroom.png"
+                        alt="Liked Photo 3"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">4.5K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm">
+                          "My friend, you're getting more handsome every day, I miss you."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                    {/* Liked Photo 4 - Man bathroom selfie 2 */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-13">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/male-photo-blue-eyes.png"
-                          alt="Liked Photo 4"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">1.8K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">"Hi handsome, what city are you from?"</p>
-                        </div>
+                  {/* Liked Photo 4 - Man bathroom selfie 2 */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-13">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/male-photo-blue-eyes.png"
+                        alt="Liked Photo 4"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Female Photos for Male/Other Investigation */}
-                    {/* Liked Photo 1 */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-10">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/liked-photo-princess.png"
-                          alt="Liked Photo 1"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">1.2K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm">"What a wonderful princess."</p>
-                        </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">1.8K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm">"Hi handsome, what city are you from?"</p>
                       </div>
                     </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Female Photos for Male/Other Investigation */}
+                  {/* Liked Photo 1 */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-10">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/liked-photo-princess.png"
+                        alt="Liked Photo 1"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">1.2K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm">"What a wonderful princess."</p>
+                      </div>
+                    </div>
+                  </div>
 
-                    {/* Liked Photo 2 */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-11">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/liked-photo-2.jpeg"
-                          alt="Liked Photo 2"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">2.4K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-sm text-white"> "Those sunsets are unbeatable 🌅"</p>
-                        </div>
+                  {/* Liked Photo 2 */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-11">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/liked-photo-2.jpeg"
+                        alt="Liked Photo 2"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">2.4K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-sm text-white"> "Those sunsets are unbeatable 🌅"</p>
+                      </div>
+                    </div>
+                  </div>
 
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-12">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/7b352510dd-8016-4bce-97de-8e8a5e4a141a-7d.png"
-                          alt="Liked Photo 3"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">3.8K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm"> "The most perfect woman I've ever seen ❤️"</p>
-                        </div>
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-12">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/7b352510dd-8016-4bce-97de-8e8a5e4a141a-7d.png"
+                        alt="Liked Photo 3"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">3.8K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm"> "The most perfect woman I've ever seen ❤️"</p>
+                      </div>
+                    </div>
+                  </div>
 
-                    {/* Liked Photo 4 */}
-                    <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-13">
-                      <div className="relative w-full h-64 rounded-md overflow-hidden">
-                        <img
-                          src="/images/garotas-lindas-melhores-amigas-alegres-irmas-curtindo-a-festa.avif"
-                          alt="Liked Photo 4 - Group of friends enjoying a party"
-                          className="w-full h-full object-cover filter blur-sm"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Lock size={48} className="text-white" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Heart size={16} className="text-pink-400" />
-                        <span className="text-sm text-gray-300">1.5K likes</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <img
-                          src={
-                            instagramProfile?.profile_pic_url
-                              ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
-                              : imagePreviewUrl || "/placeholder.svg"
-                          }
-                          alt="User Avatar"
-                          className="w-8 h-8 rounded-full object-cover border border-gray-500"
-                          crossOrigin="anonymous"
-                        />
-                        <div>
-                          <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
-                          <p className="text-white text-sm"> "Great energy! Wish I was there with you all."</p>
-                        </div>
+                  {/* Liked Photo 4 */}
+                  <div className="flex flex-col gap-2 p-3 bg-gray-800/40 rounded-lg border border-gray-700 animate-fade-in-delay-13">
+                    <div className="relative w-full h-64 rounded-md overflow-hidden">
+                      <img
+                        src="/images/garotas-lindas-melhores-amigas-alegres-irmas-curtindo-a-festa.avif"
+                        alt="Liked Photo 4 - Group of friends enjoying a party"
+                        className="w-full h-full object-cover filter blur-sm"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        <Lock size={48} className="text-white" />
                       </div>
                     </div>
-                  </>
-                )}
-              </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Heart size={16} className="text-pink-400" />
+                      <span className="text-sm text-gray-300">1.5K likes</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img
+                        src={
+                          instagramProfile?.profile_pic_url
+                            ? `/api/instagram-image-proxy?url=${encodeURIComponent(instagramProfile.profile_pic_url)}`
+                            : imagePreviewUrl || "/placeholder.svg"
+                        }
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-500"
+                        crossOrigin="anonymous"
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300 font-bold">{investigatedHandle || "@alvo"}</p>
+                        <p className="text-white text-sm"> "Great energy! Wish I was there with you all."</p>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <Button
               onClick={nextStage}
@@ -1681,13 +1694,13 @@ export default function SpySystem() {
                       ? currentPhotoIndex === 0
                         ? "/images/tinder-male-rafael.png"
                         : currentPhotoIndex === 1
-                          ? "/images/tinder-male-rafael.png"
-                          : "/images/tinder-male-rafael.png"
+                          ? "/images/tinder-male-rafael-2.jpg"
+                          : "/images/tinder-male-1.jpg"
                       : currentPhotoIndex === 0
                         ? "/images/tinder-main-profile.jpeg"
                         : currentPhotoIndex === 1
                           ? "/images/imagem-20do-20whatsapp-20de-202025-08-15-20-c3-a0-28s-29-2016.jpeg"
-                          : "/images/imagem-20do-20whatsapp-20de-202025-08-15-20-c3-a0-28s-29-2016.jpeg"
+                          : "/images/tinder-female-1.jpg"
                   }
                   alt={`Profile Photo ${currentPhotoIndex + 1}`}
                   className="w-full h-full object-cover blur-sm"
